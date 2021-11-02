@@ -97,7 +97,7 @@
                     <div class="col-md-4 my-4">
                         <div class="h-100 p-5 text-white bg-dark rounded-3">
                             <h3><span data-feather="watch" style="width:40px; height:40px; margin-right:10px;"></span>Total Play Time</h3>
-                            <h2 style="color:#00ce68;"><span style="color:#fff;">~</span><?php echo number_format($guessed_play_time / 60, 3, ".", ""); ?><span style="color:#fff;">h</span></h2>
+                            <h2 style="color:#00ce68;"><span style="color:#fff;">~</span><?php echo number_format($guessed_play_time / 60, 1, ".", ""); ?><span style="color:#fff;">h</span></h2>
                             <span style="color:#a9a9a9;">Guessed</span>
                         </div>
                     </div>
