@@ -127,3 +127,10 @@ body {
         top: 96px;
     }
 }
+
+/*
+ * Data Tables
+ */
+#activity-table_length{
+    margin-bottom:10px;
+}

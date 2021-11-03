@@ -46,9 +46,6 @@
     <title><?php echo g("name"); ?> - Arelith Portal Tracker</title>
 
     <?php include "inc/header_tags.php"; ?>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -134,7 +131,7 @@
                     <h2>Activity Log</h2>
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-dark" id="activity-table">
                                 <thead>
                                     <th>ID</th>
                                     <th>Date</th>
@@ -165,6 +162,8 @@
     <?php include "inc/js_includes.php"; ?>
 
     <script>
+        $('#activity-table').DataTable();
+
         // Play Time Graph
         let ctx = document.getElementById('play-hours-graph');
 

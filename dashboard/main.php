@@ -17,9 +17,6 @@
     <title>Dashboard - Arelith Portal Tracker</title>
 
     <?php include "inc/header_tags.php"; ?>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
