@@ -113,7 +113,7 @@
                         <canvas class="my-4 w-100" id="activity-graph"></canvas>
                     </div>
                     <div class="col-md-6">
-                        <h2>Play Time <span style="font-size:16px;color:#a9a9a9;">(In minutes)</span></h2>
+                        <h2>Play Time <span style="font-size:16px;color:#a9a9a9;">(In hours)</span></h2>
                         <canvas class="my-4 w-100" id="play-hours-graph"></canvas>
                     </div>
                 </div>
@@ -172,13 +172,13 @@
                 ],
                 datasets: [
                     {
-                        label : "Minutes(s)",
+                        label : "Hour(s)",
                         data: [
                         <?php
                             foreach($day_activity_count as $key => $val)
                             {
                         ?>
-                                <?php echo $val * PORTAL_UPDATE_INTERVAL; echo ","; ?>
+                                <?php echo number_format($val * PORTAL_UPDATE_INTERVAL / 60, 1, ".", ""); echo ","; ?>
                         <?php
                             }    
                         ?>
@@ -207,8 +207,8 @@
                     y: {
                         ticks: {
                             beginAtZero: true,
-                            stepSize : 5,
-                            // callback: function(value) {if (value % 1 === 0) {return value;}}
+                            // stepSize : 5,
+                            callback: function(value) {if (value % 1 === 0) {return value;}}
                         }
                     }
                 }
