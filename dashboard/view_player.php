@@ -227,7 +227,14 @@
         // Activity Graph
         let ctx2 = document.getElementById('activity-graph');
 
-        let data2 = [ <?php echo implode(",", $day_activity_count); ?> ];
+        let data2 = [ 
+        <?php 
+            foreach($day_activity_count as $key => $val)
+            {
+                echo number_format($val * PORTAL_UPDATE_INTERVAL / 60, 1, ".", "").",";
+            }
+        ?> 
+        ];
 
         let chart2 = new Chart(ctx2, {
             type: 'doughnut',
@@ -267,7 +274,7 @@
         <?php
             for($i=0; $i < count($character_activity_list); $i++)
             {
-                echo count(explode(STR_ARRAY_SEPARATOR, $character_activity_list[$i])).",";
+                echo number_format(count(explode(STR_ARRAY_SEPARATOR, $character_activity_list[$i])) * PORTAL_UPDATE_INTERVAL / 60, 1, ".", "").",";
             }
         ?>
         ];
