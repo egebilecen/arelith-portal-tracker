@@ -113,7 +113,7 @@
                         <canvas class="my-4 w-100" id="activity-graph"></canvas>
                     </div>
                     <div class="col-md-6">
-                        <h2>Play Time <span style="font-size:16px;color:#a9a9a9;">(In hours)</span></h2>
+                        <h2>Play Time</h2>
                         <canvas class="my-4 w-100" id="play-hours-graph"></canvas>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                 ],
                 datasets: [
                     {
-                        label : "Hour(s)",
+                        label : "Playtime",
                         data: [
                         <?php
                             foreach($day_activity_count as $key => $val)
@@ -201,6 +201,11 @@
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip : {
+                        callbacks : {
+                            label : (item) => item.label+": "+item.formattedValue+" hour(s)"
+                        }
                     }
                 },
                 scales: {
@@ -243,7 +248,7 @@
                 ],
                 datasets: [
                     {
-                        label : "Activity Count",
+                        label : "Activity",
                         data: data2,
                         backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970", "#111111", "#AAAAAA"]
                     }
@@ -255,6 +260,11 @@
                     legend : {
                         display: true,
                         position : "bottom"
+                    },
+                    tooltip : {
+                        callbacks : {
+                            label : (item) => item.label+": "+item.formattedValue+" hour(s)"
+                        }
                     }
                 }
             }
