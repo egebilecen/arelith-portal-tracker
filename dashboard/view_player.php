@@ -298,6 +298,10 @@
                         display: false,
                         position : "bottom"
                     }
+                },
+                onClick : (evt, elements, chart) => {
+                    if(elements.length < 1) return;
+                    window.location = "view_character.php?name="+chart.data.labels[elements[0].index];
                 }
             }
         });
