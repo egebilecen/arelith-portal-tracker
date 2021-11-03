@@ -153,7 +153,7 @@
     <?php include "inc/js_includes.php"; ?>
 
     <script>
-        $('#activity-table').DataTable();
+        $('#activity-table').DataTable({ order : [] });
 
         // Play Time Graph
         let ctx = document.getElementById('play-hours-graph');
