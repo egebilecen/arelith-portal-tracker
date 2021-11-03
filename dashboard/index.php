@@ -23,7 +23,7 @@
 <body class="text-center">
     <main class="form-signin">
         <form onclick="return false;">
-            <!-- <h1 class="mb-3 fw-normal" style="font-family:Neverwinter;">Sign In</h1> -->
+            <h1 class="mb-3 fw-normal" style="font-family:Neverwinter;color:#fff;">Arelith Portal</h1>
 
             <div class="form-floating">
                 <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Username">
@@ -34,7 +34,7 @@
                 <label for="floatingPassword">Password</label>
             </div>
             
-            <button id="login" class="w-100 btn btn-lg btn-primary">Login</button>
+            <button id="login" class="w-100 btn btn-lg btn-success">Login</button>
         </form>
     </main>
 
