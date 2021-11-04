@@ -11,20 +11,17 @@
 <html lang="en">
 
 <head>
-    <title>Login - Arelith Portal Tracker</title>
+    <title>Login</title>
 
     <?php include "inc/header_tags.php"; ?>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/login.css" rel="stylesheet">
-    <link href="css/fonts.css" rel="stylesheet">
 </head>
 
 <body class="text-center">
     <main class="form-signin">
         <form onclick="return false;">
-            <h1 class="mb-3 fw-normal" style="font-family:Neverwinter;color:#fff;">Arelith Portal</h1>
-
             <div class="form-floating">
                 <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Username">
                 <label for="floatingInput">Username</label>
