@@ -12,14 +12,25 @@ require_once($MAIN_PATH."libs/simple_html_dom/simple_html_dom.php");
 set_time_limit(0);
 
 //------ Main
-debug_var(NULL);
+// debug_var(NULL);
 
 $portal_request = send_get_request(PORTAL_URL);
 
-if($portal_request[0] != 200)
+for($i=0; $i < FETCHER_RETRY_COUNT; $i++)
 {
-    write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - GET ERROR - Status code is not 200. (Status code: ".$portal_request[0].")\n");
-    die();
+    $portal_request = send_get_request(PORTAL_URL);
+
+    if($portal_request[0] != 200)
+    {
+        $log_str  = "[".get_current_time()."] - GET ERROR - Status code is not 200. (Status code: ".$portal_request[0].")";
+
+        if($i != FETCHER_RETRY_COUNT - 1)
+            $log_str .= " Sending request again.";
+
+        $log_str .= "\n";
+        write_to_file(FETCHER_LOG_FILE, $log_str);
+    }
+    else break;
 }
 
 $portal_html = str_get_html($portal_request[1]);
@@ -38,14 +49,22 @@ foreach($portal_html->find("div.player") as $elem)
         continue;
     }
 
-    $is_player_added    = add_new_player($player_name);
-    $is_character_added = add_new_character($player_name, $character_name, $portrait);
+    try
+    {
+        $is_player_added    = add_new_player($player_name);
+        $is_character_added = add_new_character($player_name, $character_name, $portrait);
 
-    if(!$is_player_added)
-        add_new_player_activity($player_name);
+        if(!$is_player_added)
+            add_new_player_activity($player_name);
 
-    if(!$is_character_added)
-        add_new_character_activity($character_name);
+        if(!$is_character_added)
+            add_new_character_activity($character_name);
+    }
+    catch(PDOException $e)
+    {
+        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - PDOException occured. Player name: ".$player_name.", character name: ".$character_name.". (Exception: ".$e->getMessage().")\n");
+        continue;
+    }
 }
 
 write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - Successfully fetched data.\n");

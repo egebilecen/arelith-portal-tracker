@@ -1,6 +1,7 @@
 <?php
 
 define("FETCHER_LOG_FILE", getcwd()."/fetcher.log");
+define("FETCHER_RETRY_COUNT", 5);
 define("PORTAL_URL", "https://portal.nwnarelith.com/");
 define("PORTAL_UPDATE_INTERVAL", 15); // minute
 define("STR_ARRAY_SEPARATOR", "|");
