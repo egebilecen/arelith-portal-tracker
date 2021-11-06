@@ -63,7 +63,7 @@ foreach($portal_html->find("div.player") as $elem)
     catch(PDOException $e)
     {
         write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - PDOException occured. Player name: ".$player_name.", character name: ".$character_name.". (Exception: ".$e->getMessage().")\n");
-        continue;
+        break;
     }
 }
 
