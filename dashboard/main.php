@@ -4,8 +4,8 @@
 
     login_check();
     
-    $new_player_count      = $db->query("SELECT NULL FROM players WHERE player_date > (NOW() - INTERVAL 24 HOUR)")->rowCount();
-    $new_character_count   = $db->query("SELECT NULL FROM characters WHERE character_date > (NOW() - INTERVAL 24 HOUR)")->rowCount();
+    $new_player_count      = $db->query("SELECT NULL FROM players WHERE player_date > SUBDATE(CURDATE(), 1)")->rowCount();
+    $new_character_count   = $db->query("SELECT NULL FROM characters WHERE character_date > SUBDATE(CURDATE(), 1)")->rowCount();
     $total_player_count    = $db->query("SELECT NULL FROM players")->rowCount();
     $total_character_count = $db->query("SELECT NULL FROM characters")->rowCount();
 ?>
