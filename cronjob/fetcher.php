@@ -41,8 +41,8 @@ foreach($portal_html->find("div.player") as $elem)
     $character_name = $elem->find("div.character-name")[0]->innertext;
     $portrait       = $elem->find("div.back > img")[0]->src;
 
-    // Skip disguised
-    if(($portrait    == "portraits/po_hu_m_99_.jpg"
+    if(!FETCHER_SAVE_DISGUISED
+    && ($portrait    == "portraits/po_hu_m_99_.jpg"
         || $portrait == "portraits/po_hu_f_99_.jpg")
     && $player_name == $character_name)
     {
