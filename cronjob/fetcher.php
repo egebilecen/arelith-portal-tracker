@@ -1,6 +1,6 @@
 <?php
 
-$MAIN_PATH = "../";
+$MAIN_PATH = "/home/username/";
 
 require_once($MAIN_PATH."config.php");
 require_once($MAIN_PATH."portal_util.php");
