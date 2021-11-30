@@ -5,6 +5,8 @@ A panel for tracking players/characters activity, playtime etc. All data is pars
 # Screenshots
 Dashboard:
 ![Screenshot_2](https://user-images.githubusercontent.com/29331682/144101275-09eabde6-0152-4ad1-8088-8c7305c30494.png)
+![Screenshot_5](https://user-images.githubusercontent.com/29331682/144105640-7d0ea612-890e-41d4-872a-452017065b70.png)
+
 
 Character Page:
 ![Screenshot_3](https://user-images.githubusercontent.com/29331682/144101300-e16a94e0-99ea-41ab-a8a9-561382680379.png)
