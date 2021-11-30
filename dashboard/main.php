@@ -69,7 +69,7 @@
                         <span style="font-size:18px;">All datas are collected from <a target="_blank" style="text-decoration:none;" href="<?php echo PORTAL_URL; ?>">Arelith Portal</a>.</span>
                     </li>
                     <li>
-                        <span style="font-size:18px;">Source code can be found under this <a target="_blank" style="text-decoration:none;" href="#">repo</a>.</span>
+                        <span style="font-size:18px;">Source code can be found under this <a target="_blank" style="text-decoration:none;" href="https://github.com/egebilecen/arelith-portal-tracker">repo</a>.</span>
                     </li>
                 </ul>
 
