@@ -7,6 +7,10 @@ Dashboard:
 ![Screenshot_2](https://user-images.githubusercontent.com/29331682/144101275-09eabde6-0152-4ad1-8088-8c7305c30494.png)
 ![Screenshot_5](https://user-images.githubusercontent.com/29331682/144105640-7d0ea612-890e-41d4-872a-452017065b70.png)
 
+Search:
+![Screenshot_3](https://user-images.githubusercontent.com/29331682/144106600-5f5690a7-08f1-4a40-a543-35a6c0050014.png)
+
+
 
 Character Page:
 ![Screenshot_3](https://user-images.githubusercontent.com/29331682/144101300-e16a94e0-99ea-41ab-a8a9-561382680379.png)
