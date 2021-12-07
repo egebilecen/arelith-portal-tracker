@@ -18,7 +18,7 @@
             for(let i=0; i < data.length; i++)
             {
                 let result = data[i];
-                $("#search-results-table > tbody").append(html.replace("$result", result).replace("$func_result", result.replaceAll("'", "\\'")));
+                $("#search-results-table > tbody").append(html.replace("$result", result).replace("$func_result", encodeURI(result).replaceAll("'", "\\'")));
             }
         }
 
