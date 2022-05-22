@@ -1,6 +1,6 @@
 # Arelith Portal Tracker
 A panel for tracking players/characters activity, playtime etc. All data is parsed from [Arelith Portal](http://portal.arelith.com/) via a cronjob script.
-`portal_config.php` holds some customizable options at the beginning of the file. MySQL DB structure can be imported from `arelith_portal_tracker.sql` file.
+`portal_util.php` holds some customizable options at the beginning of the file. MySQL DB structure can be imported from `arelith_portal_tracker.sql` file.
 
 # Screenshots
 Dashboard:
