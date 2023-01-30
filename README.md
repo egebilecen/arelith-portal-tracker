@@ -2,7 +2,7 @@
 A panel for tracking players/characters activity, playtime etc. All data is parsed from [Arelith Portal](http://portal.arelith.com/) via a cronjob script.
 `portal_util.php` holds some customizable options at the beginning of the file. MySQL DB structure can be imported from `arelith_portal_tracker.sql` file.
 
-Contents of the `dashboard` folder should be copied to `/home/username/public_html`. `cronjob`, `libs` and `config.php`, `portal_util.php` folders and files should be located in `/home/username/`. Also change the `PORTAL_UPDATE_INTERVAL`'s value defined in `portal_util.php` to the time interval you set in cronjob. For example, if you are running the cronjob every 5 minutes, set `PORTAL_UPDATE_INTERVAL` define value to `5`.
+Contents of the `dashboard` folder should be copied to `/home/username/public_html`. `cronjob`, `libs` and `config.php`, `portal_util.php` folders and files should be located in `/home/username/`. Don't forget to change the `PORTAL_UPDATE_INTERVAL`'s value defined in `portal_util.php` to the time interval you set in cronjob. For example, if you are running the cronjob every 5 minutes, set `PORTAL_UPDATE_INTERVAL` define value to `5`. And update the `$MAIN_PATH` variable in `cronjob/fetcher.php` to your home path.
 
 # Screenshots
 Dashboard:
