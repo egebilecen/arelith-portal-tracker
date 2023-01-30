@@ -41,9 +41,9 @@ CREATE TABLE `characters` (
   `character_id` int(11) NOT NULL AUTO_INCREMENT,
   `character_name` varchar(224) NOT NULL,
   `character_portrait` varchar(224) NOT NULL,
-  `character_player_id` text NOT NULL,
+  `character_player_id` longtext NOT NULL,
   `character_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `character_activity` text NOT NULL,
+  `character_activity` longtext NOT NULL,
   PRIMARY KEY (`character_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -59,7 +59,7 @@ CREATE TABLE `players` (
   `player_id` int(11) NOT NULL AUTO_INCREMENT,
   `player_name` varchar(224) NOT NULL,
   `player_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `player_activity` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `player_activity` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`player_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
