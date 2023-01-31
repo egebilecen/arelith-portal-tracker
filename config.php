@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE & ~E_DEPRECATED);
 set_time_limit(0);
 date_default_timezone_set("Europe/Istanbul");
 session_start();
