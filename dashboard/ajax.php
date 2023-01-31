@@ -1,6 +1,5 @@
 <?php
-    require("../config.php");
-    require("../libs/request_util.php");
+    require_once("inc/core.php");
 
     if(p("login"))
     {

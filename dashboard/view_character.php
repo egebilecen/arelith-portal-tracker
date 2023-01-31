@@ -1,21 +1,18 @@
 <?php
-    require_once("../config.php");
-    require_once("../portal_util.php");
-
-    require_once("../libs/request_util.php");
+    require_once("inc/core.php");
 
     login_check();
 
     if(!g("name", false)
     || !$character_data = get_character_data_from_name(g("name", false)))
     {
-        header("Location: main.php");
+        header("Location: main");
     }
 
-    $character_activity = explode(STR_ARRAY_SEPARATOR, $character_data["character_activity"]);
-
+    $character_activity = get_character_activity_from_name($character_data["character_name"]);
     $guessed_play_time = 0;
 
+    $day_activity_list = [];
     $day_activity_count = [
         "Monday"    => 0,
         "Tuesday"   => 0,
@@ -26,14 +23,17 @@
         "Sunday"    => 0
     ];
 
-    for($i=0; $i < count($character_activity); $i++)
+    foreach($character_activity as $_ => $row)
     {
-        $activity = $character_activity[$i];
+        $activity = $row["character_activity_date"];
         $date     = convert_time_str($activity);
         $day_name = $date->format("l");
         
         $day_activity_count[$day_name] += 1;
         $guessed_play_time += PORTAL_UPDATE_INTERVAL;
+
+        if(!key_exists($day_name, $day_activity_list))
+            $day_activity_list[$day_name] = [];
 
         array_push($day_activity_list[$day_name], $activity);
     }
@@ -69,13 +69,13 @@
                                     $id = $player_id_list[$i];
                                     $player_name = get_player_name_from_id($id);
 
-                                    array_push($player_name_list, "<a style='text-decoration:none;' href='view_player.php?name=".urlencode($player_name)."'>".$player_name."</a>");
+                                    array_push($player_name_list, "<a style='text-decoration:none;' href='view_player?name=".urlencode($player_name)."'>".$player_name."</a>");
                                 }
 
                                 echo implode(", ", $player_name_list);
                             ?>
                         </span>
-                        <span style="display:block;font-size:16px;">Last Activity: <span style="color:#a9a9a9;"><?php echo end($character_activity); ?> <b>(GMT+3)</b></span></span>
+                        <span style="display:block;font-size:16px;">Last Activity: <span style="color:#a9a9a9;"><?php echo count($character_activity) > 0 ? format_date_from_mysql_date($character_activity[0]["character_activity_date"]) : "-"; ?></span></span>
                     </h1>
                     
                     <?php
@@ -121,27 +121,25 @@
                 <div class="row">
                     <h2>Activity Log</h2>
                     <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-dark" id="activity-table">
-                                <thead>
-                                    <th>ID</th>
-                                    <th>Date</th>
-                                </thead>
-                                <tbody>
-                            <?php
-                                for($i=count($character_activity) - 1; $i >= 0; $i--)
-                                {
-                            ?>
-                                    <tr>
-                                        <th><?php echo $i + 1; ?></th>
-                                        <td><?php echo $character_activity[$i]; ?> <b>(GMT+3)</b></td>
-                                    </tr>
-                            <?php
-                                }
-                            ?>
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table table-striped table-dark" id="activity-table">
+                            <thead>
+                                <th>ID</th>
+                                <th>Date</th>
+                            </thead>
+                            <tbody>
+                        <?php
+                            foreach($character_activity as $i => $row)
+                            {
+                        ?>
+                                <tr>
+                                    <td><?php echo count($character_activity) - $i; ?></td>
+                                    <td><?php echo format_date_from_mysql_date($character_activity[$i]["character_activity_date"]); ?></td>
+                                </tr>
+                        <?php
+                            }
+                        ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -153,7 +151,15 @@
     <?php include "inc/js_includes.php"; ?>
 
     <script>
-        $('#activity-table').DataTable({ order : [] });
+        $('#activity-table').DataTable({ 
+            order : [],
+            columns: [
+                {
+                    width: "5%"
+                },
+                null
+            ]
+         });
 
         // Play Time Graph
         let ctx = document.getElementById('play-hours-graph');

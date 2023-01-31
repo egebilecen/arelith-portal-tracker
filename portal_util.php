@@ -6,7 +6,7 @@ define("FETCHER_SAVE_DISGUISED", 1);
 define("PORTAL_URL", "https://portal.nwnarelith.com/");
 define("PORTAL_UPDATE_INTERVAL", 15); // minute
 define("STR_ARRAY_SEPARATOR", "|");
-define("DATE_FORMAT", "d/m/Y H:i:s");
+define("DATE_FORMAT", "Y-m-d H:i:s");
 
 //------ Time Functions
 function get_current_time()
@@ -17,6 +17,20 @@ function get_current_time()
 function convert_time_str($str)
 {
     return date_create_from_format(DATE_FORMAT, $str);
+}
+
+function format_date_from_mysql_date($date)
+{
+    $formatted_str = "";
+    $date_split    = explode(" ", $date);
+    $year_week_day = explode("-", $date_split[0]);
+    $hour_min_sec  = explode(":", $date_split[1]);
+
+    $formatted_str .= $year_week_day[2] . "/" . $year_week_day[1] . "/" . $year_week_day[0];
+    $formatted_str .= " ";
+    $formatted_str .= $hour_min_sec[0] . ":" . $hour_min_sec[1];
+
+    return $formatted_str;
 }
 
 //------ Array Functions
@@ -51,9 +65,8 @@ function add_new_player($player_name)
 
     $query = $db->prepare("INSERT INTO players SET player_id=NULL,
                                                    player_name=?,
-                                                   player_date=CURRENT_TIMESTAMP,
-                                                   player_activity=?");
-    $res   = $query->execute([$player_name, get_current_time()]);
+                                                   player_date=CURRENT_TIMESTAMP");
+    $res   = $query->execute([$player_name]);
 
     if(!$res)
     {
@@ -66,15 +79,13 @@ function add_new_player($player_name)
 
 function add_new_player_activity($player_name)
 {
+    global $db;
     $player_data = get_player_data_from_name($player_name);
 
-    $res = update_column("players",
-                         "player_activity", 
-                         append_to_str_list($player_data["player_activity"], get_current_time()),
-                         "player_name", $player_name);
+    $query = $db->prepare("INSERT INTO player_activities SET player_activity_player_id = ?");
+    $res = $query->execute([$player_data["player_id"]]);
 
     if(!$res) write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - add_new_character_activity() - Failed.\n");
-
     return $res;
 }
 
@@ -116,6 +127,25 @@ function get_player_data_from_name($player_name)
     }
 
     return $query->fetch(PDO::FETCH_ASSOC);
+}
+
+function get_player_activity_from_name($player_name)
+{
+    global $db;
+
+    $player_id = get_player_id_from_name($player_name);
+    if($player_id < 1) return [];
+
+    $query = $db->prepare("SELECT player_activity_date FROM player_activities WHERE player_activity_player_id=? ORDER BY player_activity_id DESC");
+    $res   = $query->execute([$player_id]);
+
+    if(!$res)
+    {
+        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - get_player_activity_from_name() - SQL query failed.\n");
+        return [];
+    }
+    
+    return $query->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function is_player_exist($player_name, &$id_out = NULL)
@@ -164,9 +194,8 @@ function add_new_character($player_name, $character_name, $character_portrait=""
                                                       character_name=?,
                                                       character_portrait=?,
                                                       character_player_id=?,
-                                                      character_date=CURRENT_TIMESTAMP,
-                                                      character_activity=?");
-    $res   = $query->execute([$character_name, $character_portrait, $player_id, get_current_time()]);
+                                                      character_date=CURRENT_TIMESTAMP");
+    $res   = $query->execute([$character_name, $character_portrait, $player_id]);
 
     if(!$res)
     {
@@ -179,15 +208,13 @@ function add_new_character($player_name, $character_name, $character_portrait=""
 
 function add_new_character_activity($character_name)
 {
+    global $db;
     $character_data = get_character_data_from_name($character_name);
 
-    $res = update_column("characters",
-                         "character_activity", 
-                         append_to_str_list($character_data["character_activity"], get_current_time()),
-                         "character_name", $character_name);
+    $query = $db->prepare("INSERT INTO character_activities SET character_activity_character_id = ?");
+    $res = $query->execute([$character_data["character_id"]]);
 
     if(!$res) write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - add_new_character_activity() - Failed.\n");
-
     return $res;
 }
 
@@ -216,6 +243,25 @@ function get_character_data_from_name($character_name)
     return $query->fetch(PDO::FETCH_ASSOC);
 }
 
+function get_character_activity_from_name($character_name)
+{
+    global $db;
+
+    $character_id = get_player_id_from_name($character_name);
+    if($character_id < 1) return [];
+
+    $query = $db->prepare("SELECT character_activity_date FROM character_activities WHERE character_activity_character_id=? ORDER BY character_activity_id DESC");
+    $res   = $query->execute([$character_id]);
+
+    if(!$res)
+    {
+        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - get_character_activity_from_name() - SQL query failed.\n");
+        return [];
+    }
+    
+    return $query->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function is_character_exist($character_name, &$id_out = NULL)
 {
     global $db;
@@ -233,5 +279,3 @@ function is_character_exist($character_name, &$id_out = NULL)
 
     return $query->rowCount() > 0;
 }
-
-?>

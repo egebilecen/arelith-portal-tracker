@@ -1,9 +1,9 @@
 <?php
-    require_once("../config.php");
+    require_once("inc/core.php");
 
     if($_SESSION["is_logged"])
     {
-        header("Location: main.php");
+        header("Location: main");
     }
 ?>
 
@@ -43,11 +43,6 @@
             $("button#login").on("click", function(){
                 if(LOGIN_AJAX_BLOCK) return;
 
-                if($("input[name='remember_me']").prop("checked"))
-                {
-                    console.log("checked");
-                }
-
                 LOGIN_AJAX_BLOCK = true;
 
                 $.ajax({
@@ -64,7 +59,7 @@
                         if(data_json.status == 0)
                             alert("Invalid username or password.");
                         else
-                            window.location = "main.php";
+                            window.location = "main";
 
                         LOGIN_AJAX_BLOCK = false;
                     },

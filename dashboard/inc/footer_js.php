@@ -28,13 +28,13 @@
     function view_player_page(name)
     {
         // console.log("Player name: "+name);
-        window.location = "view_player.php?name="+name;
+        window.location = "view_player?name="+name;
     }
 
     function view_character_page(name)
     {
         // console.log("Character name: "+name);
-        window.location = "view_character.php?name="+name;
+        window.location = "view_character?name="+name;
     }
 
     let SEARCH_AJAX_BLOCK = false;

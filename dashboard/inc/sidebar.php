@@ -6,7 +6,7 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link <?php $__file = "main.php"; if(get_current_url_file() == $__file) echo "active"; ?>" aria-current="page" href="<?php echo $__file; ?>">
+                <a class="nav-link <?php $__file = "main"; if(get_current_url_file() == $__file) echo "active"; ?>" aria-current="page" href="<?php echo $__file; ?>">
                     <span data-feather="home"></span>
                     Dashboard
                 </a>

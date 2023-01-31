@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 30, 2023 at 09:27 PM
--- Server version: 10.3.37-MariaDB
--- PHP Version: 7.4.33
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jan 31, 2023 at 07:29 PM
+-- Server version: 8.0.31
+-- PHP Version: 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,11 +27,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `admins`
 --
 
-CREATE TABLE `admins` (
-  `admin_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `admins`;
+CREATE TABLE IF NOT EXISTS `admins` (
+  `admin_id` int NOT NULL AUTO_INCREMENT,
   `admin_username` varchar(224) NOT NULL,
-  `admin_password` varchar(224) NOT NULL COMMENT 'md5'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `admin_password` varchar(224) NOT NULL COMMENT 'md5',
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `admins`
@@ -47,14 +48,29 @@ INSERT INTO `admins` (`admin_id`, `admin_username`, `admin_password`) VALUES
 -- Table structure for table `characters`
 --
 
-CREATE TABLE `characters` (
-  `character_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `characters`;
+CREATE TABLE IF NOT EXISTS `characters` (
+  `character_id` int NOT NULL AUTO_INCREMENT,
   `character_name` varchar(224) NOT NULL,
   `character_portrait` varchar(224) NOT NULL,
   `character_player_id` longtext NOT NULL,
-  `character_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `character_activity` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `character_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`character_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `character_activities`
+--
+
+DROP TABLE IF EXISTS `character_activities`;
+CREATE TABLE IF NOT EXISTS `character_activities` (
+  `character_activity_id` int NOT NULL AUTO_INCREMENT,
+  `character_activity_character_id` int NOT NULL,
+  `character_activity_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`character_activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -62,56 +78,27 @@ CREATE TABLE `characters` (
 -- Table structure for table `players`
 --
 
-CREATE TABLE `players` (
-  `player_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `players`;
+CREATE TABLE IF NOT EXISTS `players` (
+  `player_id` int NOT NULL AUTO_INCREMENT,
   `player_name` varchar(224) NOT NULL,
-  `player_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `player_activity` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `player_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`player_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Table structure for table `player_activities`
 --
 
---
--- Indexes for table `admins`
---
-ALTER TABLE `admins`
-  ADD PRIMARY KEY (`admin_id`);
-
---
--- Indexes for table `characters`
---
-ALTER TABLE `characters`
-  ADD PRIMARY KEY (`character_id`);
-
---
--- Indexes for table `players`
---
-ALTER TABLE `players`
-  ADD PRIMARY KEY (`player_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admins`
---
-ALTER TABLE `admins`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `characters`
---
-ALTER TABLE `characters`
-  MODIFY `character_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT for table `players`
---
-ALTER TABLE `players`
-  MODIFY `player_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+DROP TABLE IF EXISTS `player_activities`;
+CREATE TABLE IF NOT EXISTS `player_activities` (
+  `player_activity_id` int NOT NULL AUTO_INCREMENT,
+  `player_activity_player_id` int NOT NULL,
+  `player_activity_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`player_activity_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,6 +1,5 @@
 <?php
-    require_once("../config.php");
-    require_once("../portal_util.php");
+    require_once("inc/core.php");
 
     login_check();
     
@@ -178,6 +177,15 @@
                     },
                     legend: {
                         display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            beginAtZero: true,
+                            // stepSize : 5,
+                            callback: function(value) {if (value % 1 === 0) {return value;}}
+                        }
                     }
                 }
             }
