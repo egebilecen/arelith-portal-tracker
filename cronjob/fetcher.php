@@ -47,14 +47,11 @@ foreach ($portal_html->find("div.player") as $elem) {
     }
 
     try {
-        $is_player_added    = add_new_player($player_name);
-        $is_character_added = add_new_character($player_name, $character_name, $portrait);
+        add_new_player($player_name);
+        add_new_character($player_name, $character_name, $portrait);
 
-        if (!$is_player_added)
-            add_new_player_activity($player_name);
-
-        if (!$is_character_added)
-            add_new_character_activity($character_name);
+        add_new_player_activity($player_name);
+        add_new_character_activity($character_name);
     } catch (PDOException $e) {
         write_to_file(FETCHER_LOG_FILE, "[" . get_current_time() . "] - PDOException occured. Player name: " . $player_name . ", character name: " . $character_name . ". (Exception: " . $e->getMessage() . ")\n");
         break;

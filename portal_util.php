@@ -247,7 +247,7 @@ function get_character_activity_from_name($character_name)
 {
     global $db;
 
-    $character_id = get_player_id_from_name($character_name);
+    $character_id = get_character_id_from_name($character_name);
     if($character_id < 1) return [];
 
     $query = $db->prepare("SELECT character_activity_date FROM character_activities WHERE character_activity_character_id=? ORDER BY character_activity_id DESC");
