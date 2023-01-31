@@ -16,17 +16,17 @@ set_time_limit(0);
 
 $portal_request = send_get_request(PORTAL_URL);
 
-for ($i = 0; $i < FETCHER_RETRY_COUNT; $i++) {
+for ($i = 0; $i < TRACKER_RETRY_COUNT; $i++) {
     $portal_request = send_get_request(PORTAL_URL);
 
     if ($portal_request[0] != 200) {
         $log_str  = "[" . get_current_time() . "] - GET ERROR - Status code is not 200. (Status code: " . $portal_request[0] . ")";
 
-        if ($i != FETCHER_RETRY_COUNT - 1)
+        if ($i != TRACKER_RETRY_COUNT - 1)
             $log_str .= " Sending request again.";
 
         $log_str .= "\n";
-        write_to_file(FETCHER_LOG_FILE, $log_str);
+        write_to_file(TRACKER_LOG_FILE, $log_str);
     } else break;
 }
 
@@ -38,7 +38,7 @@ foreach ($portal_html->find("div.player") as $elem) {
     $portrait       = $elem->find("div.back > img")[0]->src;
 
     if (
-        !FETCHER_SAVE_DISGUISED
+        !TRACKER_SAVE_DISGUISED
         && ($portrait    == "portraits/po_hu_m_99_.jpg"
             || $portrait == "portraits/po_hu_f_99_.jpg")
         && $player_name == $character_name
@@ -53,9 +53,9 @@ foreach ($portal_html->find("div.player") as $elem) {
         add_new_player_activity($player_name);
         add_new_character_activity($character_name);
     } catch (PDOException $e) {
-        write_to_file(FETCHER_LOG_FILE, "[" . get_current_time() . "] - PDOException occured. Player name: " . $player_name . ", character name: " . $character_name . ". (Exception: " . $e->getMessage() . ")\n");
+        write_to_file(TRACKER_LOG_FILE, "[" . get_current_time() . "] - PDOException occured. Player name: " . $player_name . ", character name: " . $character_name . ". (Exception: " . $e->getMessage() . ")\n");
         break;
     }
 }
 
-write_to_file(FETCHER_LOG_FILE, "[" . get_current_time() . "] - Successfully fetched data.\n");
+write_to_file(TRACKER_LOG_FILE, "[" . get_current_time() . "] - Successfully fetched data.\n");

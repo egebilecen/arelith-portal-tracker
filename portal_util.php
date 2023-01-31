@@ -1,8 +1,8 @@
 <?php
 
-define("FETCHER_LOG_FILE", getcwd()."/fetcher.log");
-define("FETCHER_RETRY_COUNT", 5);
-define("FETCHER_SAVE_DISGUISED", 1);
+define("TRACKER_LOG_FILE", getcwd()."/tracker.log");
+define("TRACKER_RETRY_COUNT", 5);
+define("TRACKER_SAVE_DISGUISED", 1);
 define("PORTAL_URL", "https://portal.nwnarelith.com/");
 define("PORTAL_UPDATE_INTERVAL", 15); // minute
 define("STR_ARRAY_SEPARATOR", "|");
@@ -51,7 +51,7 @@ function update_column($table, $column, $val, $where, $where_val)
     $query = $db->prepare("UPDATE ".$table." SET ".$column."=? WHERE ".$where."=?");
     $res   = $query->execute([$val, $where_val]);
 
-    if(!$res) write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - update_column() - SQL query failed.\n");
+    if(!$res) write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - update_column() - SQL query failed.\n");
 
     return $res;
 }
@@ -70,7 +70,7 @@ function add_new_player($player_name)
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - add_new_player() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - add_new_player() - SQL query failed.\n");
         return false;
     }
 
@@ -85,7 +85,7 @@ function add_new_player_activity($player_name)
     $query = $db->prepare("INSERT INTO player_activities SET player_activity_player_id = ?");
     $res = $query->execute([$player_data["player_id"]]);
 
-    if(!$res) write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - add_new_character_activity() - Failed.\n");
+    if(!$res) write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - add_new_character_activity() - Failed.\n");
     return $res;
 }
 
@@ -107,7 +107,7 @@ function get_player_name_from_id($player_id)
     $query = $db->prepare("SELECT player_name FROM players WHERE player_id=?");
     $res   = $query->execute([$player_id]);
 
-    if(!$res) write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - get_player_name_from_id() - SQL query failed.\n");
+    if(!$res) write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - get_player_name_from_id() - SQL query failed.\n");
     else      $player_name = $query->fetch(PDO::FETCH_ASSOC)["player_name"];
     
     return $player_name;
@@ -122,7 +122,7 @@ function get_player_data_from_name($player_name)
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - get_player_data_from_name() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - get_player_data_from_name() - SQL query failed.\n");
         return false;
     }
 
@@ -141,7 +141,7 @@ function get_player_activity_from_name($player_name)
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - get_player_activity_from_name() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - get_player_activity_from_name() - SQL query failed.\n");
         return [];
     }
     
@@ -157,7 +157,7 @@ function is_player_exist($player_name, &$id_out = NULL)
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - is_player_exist() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - is_player_exist() - SQL query failed.\n");
         return false;
     }
 
@@ -199,7 +199,7 @@ function add_new_character($player_name, $character_name, $character_portrait=""
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - add_new_character() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - add_new_character() - SQL query failed.\n");
         return false;
     }
 
@@ -214,7 +214,7 @@ function add_new_character_activity($character_name)
     $query = $db->prepare("INSERT INTO character_activities SET character_activity_character_id = ?");
     $res = $query->execute([$character_data["character_id"]]);
 
-    if(!$res) write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - add_new_character_activity() - Failed.\n");
+    if(!$res) write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - add_new_character_activity() - Failed.\n");
     return $res;
 }
 
@@ -236,7 +236,7 @@ function get_character_data_from_name($character_name)
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - get_character_data_from_name() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - get_character_data_from_name() - SQL query failed.\n");
         return false;
     }
 
@@ -255,7 +255,7 @@ function get_character_activity_from_name($character_name)
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - get_character_activity_from_name() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - get_character_activity_from_name() - SQL query failed.\n");
         return [];
     }
     
@@ -271,7 +271,7 @@ function is_character_exist($character_name, &$id_out = NULL)
 
     if(!$res)
     {
-        write_to_file(FETCHER_LOG_FILE, "[".get_current_time()."] - is_character_exist() - SQL query failed.\n");
+        write_to_file(TRACKER_LOG_FILE, "[".get_current_time()."] - is_character_exist() - SQL query failed.\n");
         return false;
     }
 
