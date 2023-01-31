@@ -48,7 +48,5 @@ function debug_var($var)
 
 function login_check()
 {
-    if(!$_SESSION["is_logged"]) header("Location: index.php");
+    if(!$_SESSION["is_logged"]) header("Location: ./");
 }
-
-?>
