@@ -1,5 +1,5 @@
 <?php
-    require_once("../libs/request_util.php");
+    require_once(MAIN_PATH . "libs/request_util.php");
 ?>
 
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
