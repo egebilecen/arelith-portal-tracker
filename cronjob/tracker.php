@@ -7,7 +7,6 @@ require_once(MAIN_PATH . "portal_util.php");
 
 require_once(MAIN_PATH . "libs/file_util.php");
 require_once(MAIN_PATH . "libs/request_util.php");
-require_once(MAIN_PATH . "libs/simple_html_dom/simple_html_dom.php");
 
 set_time_limit(0);
 
