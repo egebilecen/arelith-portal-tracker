@@ -27,15 +27,20 @@ for ($i = 0; $i < TRACKER_RETRY_COUNT; $i++) {
 
         $log_str .= "\n";
         write_to_file(TRACKER_LOG_FILE, $log_str);
+
+        if ($i == TRACKER_RETRY_COUNT - 1)
+            die();
     } else break;
 }
 
-$portal_html = str_get_html($portal_request[1]);
+$next_data_regex = "/<script id=\"__NEXT_DATA__\" type=\"application\/json\">(.*?)<\/script>/";
+preg_match_all($next_data_regex, $portal_request[1], $next_data);
+$next_data = json_decode($next_data[1][0], true);
 
-foreach ($portal_html->find("div.player") as $elem) {
-    $player_name    = $elem->find("div.player-name")[0]->innertext;
-    $character_name = $elem->find("div.character-name")[0]->innertext;
-    $portrait       = $elem->find("div.back > img")[0]->src;
+foreach ($next_data["props"]["pageProps"]["players"] as $elem) {
+    $player_name    = $elem["playerName"];
+    $character_name = $elem["visibleName"];
+    $portrait       = "portraits/" . $elem["portraitResRef"];
 
     if (
         !TRACKER_SAVE_DISGUISED

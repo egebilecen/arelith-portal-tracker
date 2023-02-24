@@ -3,7 +3,7 @@
 define("TRACKER_LOG_FILE", getcwd() . "/tracker.log");
 define("TRACKER_RETRY_COUNT", 5);
 define("TRACKER_SAVE_DISGUISED", 1);
-define("PORTAL_URL", "https://portal.nwnarelith.com/");
+define("PORTAL_URL", "https://astrolabe.nwnarelith.com/portal");
 define("PORTAL_UPDATE_INTERVAL", 15); // minute
 define("STR_ARRAY_SEPARATOR", "|");
 define("DATE_FORMAT", "Y-m-d H:i:s");
