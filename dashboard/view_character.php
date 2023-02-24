@@ -83,7 +83,7 @@
                         {
                     ?>
                             <div style="overflow:hidden;height:172px;display:block;margin-bottom:10px;">
-                                <img style="display:block;height:220px;" src="<?php echo PORTAL_URL.$character_data["character_portrait"] ?>">
+                                <img style="display:block;height:220px;" src="<?php echo "https://astrolabe.nwnarelith.com/_next/image?url=/images/".$character_data["character_portrait"]."&w=96&q=75" ?>">
                             </div>
                     <?php
                         }
