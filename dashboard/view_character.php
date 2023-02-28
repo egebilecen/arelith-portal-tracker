@@ -76,6 +76,7 @@
                             ?>
                         </span>
                         <span style="display:block;font-size:16px;">Last Activity: <span style="color:#a9a9a9;"><?php echo count($character_activity) > 0 ? format_date_from_mysql_date($character_activity[0]["character_activity_date"]) : "-"; ?></span></span>
+                        <a href="javascript:void(0);" style="display:block;font-size:16px;text-decoration:none;" onclick="toggle_character_quick_access('<?php echo urlencode(g("name", false)); ?>')">Toggle Quick Access</a>
                     </h1>
                     
                     <?php

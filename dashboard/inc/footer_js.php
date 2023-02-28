@@ -1,4 +1,32 @@
 <script>
+    function url_decode(url) 
+    {
+        return decodeURIComponent(url.replace(/\+/g, ' '));
+    }
+    
+    function toggle_character_quick_access(character_name)
+    {
+        let character_list  = JSON.parse(localStorage.getItem("quick_access_characters"));
+        let character_index = character_list.indexOf(character_name);
+
+        if(character_index > -1)
+            character_list.splice(character_index, 1);
+        else
+            character_list.push(character_name);
+        
+        localStorage.setItem("quick_access_characters", JSON.stringify(character_list));
+        window.location.reload();
+    }
+
+    function clear_character_quick_access()
+    {
+        if(confirm("Are you sure to clear all characters in quick access?"))
+        {
+            localStorage.setItem("quick_access_characters", "[]");
+            window.location.reload();
+        }
+    }
+
     function hide_search_results()
     {
         $(".search-results").css("display", "none");
@@ -18,7 +46,7 @@
             for(let i=0; i < data.length; i++)
             {
                 let result = data[i];
-                $("#search-results-table > tbody").append(html.replace("$result", result).replace("$func_result", encodeURI(result).replaceAll("'", "\\'")));
+                $("#search-results-table > tbody").append(html.replace("$result", result).replace("$func_result", encodeURIComponent(result).replaceAll("'", "\\'")));
             }
         }
 
@@ -40,10 +68,28 @@
     let SEARCH_AJAX_BLOCK = false;
 
     (function () {
+        if(localStorage.getItem("quick_access_characters") === null)
+            localStorage.setItem("quick_access_characters", "[]");
+    })();
+
+    (function () {
         feather.replace({ 'aria-hidden': 'true' });
     })();
 
     $(() => {
+        let character_list = JSON.parse(localStorage.getItem("quick_access_characters"));
+
+        if(character_list.length < 1)
+        {
+            $("#quick-access-characters").append("<li><span class='nav-link'>No data.</span></li>");
+        }
+        else
+        {
+            character_list.forEach(character_name => {
+                $("#quick-access-characters").append("<li><a class='nav-link' href='view_character?name="+character_name+"'>"+url_decode(character_name)+"</span></li>");
+            });
+        }
+
         $("input[name='search']").on("input", () => {
             if(SEARCH_AJAX_BLOCK) return;
 
