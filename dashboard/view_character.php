@@ -84,7 +84,7 @@
                         {
                     ?>
                             <div style="overflow:hidden;height:172px;display:block;margin-bottom:10px;">
-                                <img style="display:block;height:220px;" src="<?php echo "https://astrolabe.nwnarelith.com/_next/image?url=/images/".$character_data["character_portrait"]."&w=96&q=75" ?>">
+                                <img style="display:block;height:220px;" src="<?php if(!filter_var($character_data["character_portrait"], FILTER_VALIDATE_URL)) echo "https://astrolabe.nwnarelith.com/".$character_data["character_portrait"]; else echo $character_data["character_portrait"]; ?>">
                             </div>
                     <?php
                         }
