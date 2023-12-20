@@ -16,8 +16,6 @@ set_time_limit(0);
 //------ Main
 // debug_var(NULL);
 
-$portal_request = send_get_request(PORTAL_URL);
-
 for ($i = 0; $i < TRACKER_RETRY_COUNT; $i++) {
     $portal_request = send_get_request(PORTAL_URL);
 
@@ -35,19 +33,17 @@ for ($i = 0; $i < TRACKER_RETRY_COUNT; $i++) {
     } else break;
 }
 
-$next_data_regex = "/<script id=\"__NEXT_DATA__\" type=\"application\/json\">(.*?)<\/script>/";
-preg_match_all($next_data_regex, $portal_request[1], $next_data);
-$next_data = json_decode($next_data[1][0], true);
+$api_data = json_decode($portal_request[1], true);
 
-foreach ($next_data["props"]["pageProps"]["players"] as $elem) {
+foreach ($api_data["players"] as $elem) {
     $player_name    = $elem["playerName"];
     $character_name = $elem["visibleName"];
-    $portrait       = "portraits/" . $elem["portraitResRef"];
+    $portrait       = $elem["portraitResRef"];
 
     if (
         !TRACKER_SAVE_DISGUISED
-        && ($portrait    == "portraits/po_hu_m_99_.jpg"
-            || $portrait == "portraits/po_hu_f_99_.jpg")
+        && ($portrait    == "/images/portraits/po_hu_m_99_.jpg"
+            || $portrait == "/images/portraits/po_hu_f_99_.jpg")
         && $player_name == $character_name
     ) {
         continue;
